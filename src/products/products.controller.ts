@@ -10,7 +10,7 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) { }
 
   // @Post()
-  // Payload - Body - Query - Param
+  // Payload = Body | Query | Param
   @MessagePattern({ cmd: 'create_product' })
   create(@Payload() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
@@ -38,5 +38,10 @@ export class ProductsController {
   @MessagePattern({ cmd: 'delete_product' })
   remove(@Payload('id', ParseIntPipe) id: number) {
     return this.productsService.remove(id);
+  }
+
+  @MessagePattern({ cmd: 'validate_products'})
+  validateProducts(@Payload() ids: number[]) {
+    return this.productsService.validateProducts(ids);
   }
 }
